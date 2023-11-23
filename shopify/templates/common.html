@@ -33,6 +33,29 @@
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{% static 'css/style.css'%}" rel="stylesheet" />
     <link href="{% static 'css/style.min.css'%}" rel="stylesheet" />
+
+    <script type="text/JavaScript">
+      //  get the logged in user
+      let user = '{{request.user}}'
+
+      //  creating a csrftoken
+      function getToken(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+      }
+        const csrftoken = getToken('csrftoken');
+    </script>
   </head>
 
   <body>
@@ -491,5 +514,7 @@
 
     <!-- Template Javascript -->
     <script src="{% static 'js/main.js'%}"></script>
+    <script src="{% static 'js/scripts.js'%}"></script>
+    
   </body>
 </html>
