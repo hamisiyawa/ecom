@@ -23,6 +23,8 @@ class Product(models.Model):
     description = models.CharField(max_length=255,null=True)
     sizes = models.CharField(max_length=10, choices=[('XS', 'XS'), ('S', 'S'), ('M', 'M'), ('L', 'L'), ('XL', 'XL')], null=True, blank=True)
     colors = models.CharField(max_length=20, null=True, blank=True)
+    digital = models.BooleanField(default=False,null=True, blank=False)
+    trendy = models.BooleanField(default=False,null=True, blank=False)
     image = models.ImageField(upload_to='media/', default='profile.png')
 
     def __str__(self):
@@ -47,6 +49,17 @@ class Order(models.Model):
     transaction_id = models.CharField(max_length=200,null=True)
     def __str__(self):
         return str(self.id)
+    
+    @property
+    def shipping_details(self):
+        shipping_details = False
+        orderitems = self.orderitem_set.all()
+        for i in orderitems:
+            if i.product.digital == False:
+                shipping_details = True
+        return shipping_details
+
+
 
     @property
     def get_cart_total(self):
@@ -88,6 +101,7 @@ class OrderItem(models.Model):
 class ShippingAddress(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, blank=True, null=True)
     order = models.ForeignKey(Order, on_delete=models.SET_NULL,null=True)
+    mobile = models.CharField(max_length=200, null=True)
     address = models.CharField(max_length=200, null=True)
     city = models.CharField(max_length=200, null=True)
     state = models.CharField(max_length=200, null=True)
@@ -95,4 +109,24 @@ class ShippingAddress(models.Model):
 
     def __str__(self):
         return self.address
+
+
+class homeCaurosel(models.Model):
+    text1 = models.CharField(max_length=200, null=True)
+    text2 = models.CharField(max_length=200, null=True)
+    btn_text = models.CharField(max_length=200, null=True)
+    image = models.ImageField(upload_to='media/', default='profile.png')
+
+    def __str__(self):
+       return str(self.id)
+
+
+class homeCollections(models.Model):
+    heading1 = models.CharField(max_length=200, null=True)
+    heading2 = models.CharField(max_length=200, null=True)
+    btn_text = models.CharField(max_length=200, null=True)
+    image = models.ImageField(upload_to='media/', default='profile.png')
+
+    def __str__(self):
+       return str(self.id)
 

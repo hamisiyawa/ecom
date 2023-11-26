@@ -125,7 +125,7 @@
           <a href="{% url 'shopify:cart'%}" class="btn border">
             <i class="fas fa-shopping-cart text-primary"></i>
             <span class="badge">
-              {{order.get_cart_items}}
+              {{cartItems}}
             </span>
           </a>
         </div>
@@ -208,10 +208,11 @@
           <!-- Home caurosel -->
           <div id="header-carousel" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
-              <div class="carousel-item active" style="height: 410px">
+              {% for caurosel in image_caurosels%}
+              <div class="carousel-item {% if forloop.first %}active{% endif %}" style="height: 410px">
                 <img
                   class="img-fluid"
-                  src="{% static 'img/carousel-1.jpg' %}"
+                  src="{{ caurosel.image.url }}"
                   alt="Image"
                 />
                 <div
@@ -221,37 +222,16 @@
                     <h4
                       class="text-light text-uppercase font-weight-medium mb-3"
                     >
-                      10% Off Your First Order
+                      {{caurosel.text1}}
                     </h4>
                     <h3 class="display-4 text-white font-weight-semi-bold mb-4">
-                      Fashionable Dress
+                      {{caurosel.text2}}
                     </h3>
-                    <a href="{% url 'shopify:shop'%}" class="btn btn-light py-2 px-3">Shop Now</a>
+                    <a href="{% url 'shopify:shop'%}" class="btn btn-light py-2 px-3">{{caurosel.btn_text}}</a>
                   </div>
                 </div>
               </div>
-              <div class="carousel-item" style="height: 410px">
-                <img
-                  class="img-fluid"
-                  src="{% static 'img/carousel-2.jpg' %}"
-                  alt="Image"
-                />
-                <div
-                  class="carousel-caption d-flex flex-column align-items-center justify-content-center"
-                >
-                  <div class="p-3" style="max-width: 700px">
-                    <h4
-                      class="text-light text-uppercase font-weight-medium mb-3"
-                    >
-                      10% Off Your First Order
-                    </h4>
-                    <h3 class="display-4 text-white font-weight-semi-bold mb-4">
-                      Reasonable Price
-                    </h3>
-                    <a href="{% url 'shopify:shop'%}" class="btn btn-light py-2 px-3">Shop Now</a>
-                  </div>
-                </div>
-              </div>
+              {% endfor %}
             </div>
             <a
               class="carousel-control-prev"
@@ -403,22 +383,22 @@
             <div class="col-md-4 mb-5">
               <h5 class="font-weight-bold text-dark mb-4">Quick Links</h5>
               <div class="d-flex flex-column justify-content-start">
-                <a class="text-dark mb-2" href="index.html"
+                <a class="text-dark mb-2" href="{% url 'shopify:home'%}"
                   ><i class="fa fa-angle-right mr-2"></i>Home</a
                 >
-                <a class="text-dark mb-2" href="shop.html"
+                <a class="text-dark mb-2" href="{% url 'shopify:shop'%}"
                   ><i class="fa fa-angle-right mr-2"></i>Our Shop</a
                 >
-                <a class="text-dark mb-2" href="detail.html"
+                <a class="text-dark mb-2" href="{% url 'shopify:detail'%}"
                   ><i class="fa fa-angle-right mr-2"></i>Shop Detail</a
                 >
-                <a class="text-dark mb-2" href="cart.html"
+                <a class="text-dark mb-2" href="{% url 'shopify:cart'%}"
                   ><i class="fa fa-angle-right mr-2"></i>Shopping Cart</a
                 >
-                <a class="text-dark mb-2" href="checkout.html"
+                <a class="text-dark mb-2" href="{% url 'shopify:checkout'%}"
                   ><i class="fa fa-angle-right mr-2"></i>Checkout</a
                 >
-                <a class="text-dark" href="contact.html"
+                <a class="text-dark" href="{% url 'shopify:contact'%}"
                   ><i class="fa fa-angle-right mr-2"></i>Contact Us</a
                 >
               </div>
@@ -426,19 +406,19 @@
             <div class="col-md-4 mb-5">
               <h5 class="font-weight-bold text-dark mb-4">Social links</h5>
               <div class="d-flex flex-column justify-content-start">
-                <a class="text-dark mb-2" href="index.html"
+                <a class="text-dark mb-2" href="#"
                   ><i class="fab fa-facebook-f mr-2"></i>Facebook</a
                 >
-                <a class="text-dark mb-2" href="shop.html"
+                <a class="text-dark mb-2" href="#"
                   ><i class="fab fa-twitter mr-2"></i>Twitter</a
                 >
-                <a class="text-dark mb-2" href="detail.html"
+                <a class="text-dark mb-2" href="#"
                   ><i class="fab fa-linkedin-in mr-2"></i>Linkedin</a
                 >
-                <a class="text-dark mb-2" href="cart.html"
+                <a class="text-dark mb-2" href="#"
                   ><i class="fab fa-instagram mr-2"></i>Instagram</a
                 >
-                <a class="text-dark mb-2" href="checkout.html"
+                <a class="text-dark mb-2" href="#"
                   ><i class="fab fa-youtube mr-2"></i>Youtube
                   </a
                 >

@@ -9,6 +9,7 @@ for (let i = 0; i < updateBtns.length; i++) {
       if(user === 'AnonymousUser'){
         window.alert('user is not authenticated')
       }else{
+        alert('Item added to cart successfully')
         updateUserOrder(productId,action)
       }
    })
@@ -33,5 +34,6 @@ function updateUserOrder(productId, action) {
     })
     .then((data) => {
         console.log('data: ', data)
+        location.reload()
     });
 }
