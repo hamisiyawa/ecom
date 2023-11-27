@@ -19,7 +19,7 @@ class Category(models.Model):
 class Product(models.Model):
     Category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True)
     product_title = models.CharField(max_length=30, null=True)
-    price = models.FloatField()
+    price = models.DecimalField(max_digits=7,decimal_places=2)
     description = models.CharField(max_length=255,null=True)
     sizes = models.CharField(max_length=10, choices=[('XS', 'XS'), ('S', 'S'), ('M', 'M'), ('L', 'L'), ('XL', 'XL')], null=True, blank=True)
     colors = models.CharField(max_length=20, null=True, blank=True)
@@ -75,11 +75,11 @@ class Order(models.Model):
 
 
 
-    @property
-    def get_total_payment(self):
-        orderitems = self.orderitem_set.all()
-        total = sum([item.get_total for item in orderitems])
-        return total
+    # @property
+    # def get_total_payment(self):
+    #     orderitems = self.orderitem_set.all()
+    #     total = sum([item.get_total for item in orderitems])
+    #     return total
 
 class Shipping(models.Model):
     shipping_cost = models.FloatField(default=0)

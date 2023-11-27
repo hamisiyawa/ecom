@@ -170,7 +170,7 @@
           <div class="d-flex justify-content-between mt-2">
             <h5 class="font-weight-bold">Total</h5>
             <h5 class="font-weight-bold">
-              ${{order.get_total_payment|add:shipping.shipping_cost|floatformat:2}}
+              ${{order.get_cart_total|add:shipping.shipping_cost|floatformat:2}}
             </h5>
           </div>
         </div>

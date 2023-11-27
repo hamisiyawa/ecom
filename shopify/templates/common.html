@@ -55,6 +55,32 @@
         return cookieValue;
       }
         const csrftoken = getToken('csrftoken');
+
+      function getCookie(name) {
+        // split cookie string and get all individual name=value pairs in an array
+        let cookieArr = document.cookie.split(";");
+
+        // loop through the array element
+        for(let i = 0; i < cookieArr.length; i++){
+           let cookiePair = cookieArr[i].split("=");
+
+          //  removing whitespace ata the begining of the cookie name and compare it with given string
+          if(name == cookiePair[0].trim()){
+            // decode the cookie value and return
+            return decodeURIComponent(cookiePair[1]);
+          }
+        }
+        // return null if not found
+        return null;
+      }
+
+      let cart = JSON.parse(getCookie('cart'))
+      if(cart == undefined){
+         cart = {}
+         console.log('cart was created')
+         document.cookie = 'cart=' + JSON.stringify(cart) + ";domain;path=/"
+      }
+      console.log('Cart:', cart)
     </script>
   </head>
 
@@ -146,8 +172,8 @@
             <a href="" class="text-decoration-none d-block d-lg-none">
               <h1 class="m-0 display-5 font-weight-semi-bold">
                 <span class="text-primary font-weight-bold border px-3 mr-1"
-                  >E</span
-                >Shopper
+                >Shopify</span
+              >
               </h1>
             </a>
             <button

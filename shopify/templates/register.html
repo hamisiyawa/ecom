@@ -15,10 +15,35 @@
     </div>
 </div>
 <!-- Page Header End -->
+    <div class="container">
+        <h2 class="text-center mb-4">Registration Form</h2>
+        <form style="width: 70%; margin: auto;">
+            <div class="mb-3">
+                <label for="firstName" class="form-label">First Name</label>
+                <input type="text" class="form-control" id="firstName" name="firstname" required>
+            </div>
+            <div class="mb-3">
+                <label for="lastName" class="form-label">Last Name</label>
+                <input type="text" class="form-control" id="lastName" name="lastname" required>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" name="password1" required>
+            </div>
+            <div class="mb-3">
+                <label for="confirmPassword" class="form-label">Confirm Password</label>
+                <input type="password" class="form-control" id="confirmPassword" name="password2" required>
+            </div>
+            <button type="submit" class="btn btn-lg btn-block btn-primary mb-3">Register</button>
+            <p class="text-center">Already having acount?<a href="{% url 'shopify:signin'%}">Login here</a></p>
+        </form>
+    </div>
+    
 
- <div class="form">
-    <h1 class="text-center"> Registration form will appear here</h1>
- </div>
 {% endblock %}
 
 

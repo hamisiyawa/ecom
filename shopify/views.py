@@ -5,6 +5,7 @@ import json
 from .models import *
 import datetime
 import random
+from . utils import cookieCart, cartData
 
 
 # Create your views here.
@@ -27,18 +28,12 @@ def home(request):
         .order_by('?')[:6]
     )
 
-    # add items to cart if a customer is authenticated
-    if request.user.is_authenticated:
-        shipping = Shipping.objects.first()
-        customer = request.user.customer
-        order, created = Order.objects.get_or_create(customer=customer, complete=False)
-        items = order.orderitem_set.all()
-        cartItems = order.get_cart_items
-    else:
-        shipping = {'shipping_cost': 0}
-        items = []
-        order = {'get_cart_total': 0, 'get_cart_items': 0, 'shiping_details': False}
-        cartItems = ['get_cart_items']
+    # get data from utils.py 
+    data = cartData(request)
+    # shipping = data['shipping']
+    cartItems = data['cartItems']
+    order = data['order']
+    items = data['items']
 
 
     context = {
@@ -56,18 +51,12 @@ def home(request):
 def shop(request):
     products = Product.objects.all()
     categories = Category.objects.all()
-     # add items to cart if a customer is authenticated
-    if request.user.is_authenticated:
-        shipping = Shipping.objects.first()
-        customer = request.user.customer
-        order, created = Order.objects.get_or_create(customer=customer, complete=False)
-        items = order.orderitem_set.all()
-        cartItems = order.get_cart_items
-    else:
-        shipping = {'shipping_cost': 0}
-        items = []
-        order = {'get_cart_total': 0, 'get_cart_items': 0, 'shiping_details': False}
-        cartItems = ['get_cart_items']
+    # get data from utils.py 
+    data = cartData(request)
+    shipping = data['shipping']
+    cartItems = data['cartItems']
+    order = data['order']
+    items = data['items']
 
     context ={
         'cartItems': cartItems,
@@ -88,20 +77,12 @@ def details(request):
     return render(request, 'detail.html',context)
 
 def cart(request):
-    
-    # add items to cart if a customer is authenticated
-    if request.user.is_authenticated:
-        shipping = Shipping.objects.first()
-        customer = request.user.customer
-        order, created = Order.objects.get_or_create(customer=customer, complete=False)
-        items = order.orderitem_set.all()
-        cartItems = order.get_cart_items
-    else:
-        shipping = {'shipping_cost': 0}
-        items = []
-        order = {'get_cart_total': 0, 'get_cart_items': 0,'shiping_details': False}
-        cartItems = ['get_cart_items']
-
+    # get data from utils.py 
+    data = cartData(request)
+    shipping = data['shipping']
+    cartItems = data['cartItems']
+    order = data['order']
+    items = data['items']
     
     context = {
      'cartItems': cartItems,
@@ -112,18 +93,12 @@ def cart(request):
     return render(request, 'cart.html',context)
 
 def checkout(request):
-    # add items to cart if a customer is authenticated
-    if request.user.is_authenticated:
-        shipping = Shipping.objects.first()
-        customer = request.user.customer
-        order, created = Order.objects.get_or_create(customer=customer, complete=False)
-        items = order.orderitem_set.all()
-        cartItems = order.get_cart_items
-    else:
-        shipping = {'shipping_cost': 0}
-        items = []
-        order = {'get_cart_total': 0, 'get_cart_items': 0,'shiping_details': False}
-        cartItems = ['get_cart_items']
+     # get data from utils.py 
+    data = cartData(request)
+    shipping = data['shipping']
+    cartItems = data['cartItems']
+    order = data['order']
+    items = data['items']
 
     context = {
         'cartItems': cartItems,
@@ -136,13 +111,43 @@ def checkout(request):
     return render(request, 'checkout.html',context)
 
 def contact(request):
-    return render(request, 'contact.html', {'name':'checkout'})
+
+
+    # get data from utils.py 
+    data = cartData(request)
+    cartItems = data['cartItems']
+
+    
+    context = {
+        'cartItems': cartItems,
+        'name':'checkout'
+    }
+    return render(request, 'contact.html',context )
 
 def signin(request):
-    return render(request, 'signin.html', {'name':'signin'})
+
+
+    # get data from utils.py 
+    data = cartData(request)
+    cartItems = data['cartItems']
+    
+    context = {
+        'cartItems': cartItems,
+        'name':'signin'
+    }
+    return render(request, 'signin.html',context)
 
 def register(request):
-    return render(request, 'register.html', {'name':'register'})
+
+    # get data from utils.py 
+    data = cartData(request)
+    cartItems = data['cartItems']
+    
+    context = {
+        'cartItems': cartItems,
+        'name':'register'
+    }
+    return render(request, 'register.html',context )
 
 
 def updateItem(request):
