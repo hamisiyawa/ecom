@@ -30,7 +30,7 @@ def cookieCart(request):
             item = {
                 'product':{
                     'id': product.id,
-                    'name': product.product_title,
+                    'product_title': product.product_title,
                     'price': product.price,
                     'image': product.image
                 },
@@ -49,8 +49,7 @@ def cookieCart(request):
 
 
 def cartData(request):
-
-       # add items to cart if a customer is authenticated
+    # add items to cart if a customer is authenticated
     if request.user.is_authenticated:
         shipping = Shipping.objects.first()
         customer = request.user.customer
@@ -66,3 +65,32 @@ def cartData(request):
         items = cookieData['items']
 
     return {'cartItems': cartItems,'order': order, 'items': items, 'shipping': shipping}
+
+def guestOrder(request,data):
+    print('User not logged in..')
+
+    print('COOKIES:', request.COOKIES)
+    name = data['form']['name']
+    email = data['form']['email']
+
+    cookieData = cookieCart(request)
+    items = cookieData['items']
+
+    customer, created = Customer.objects.get_or_create(email=email)
+    customer.name = name
+    customer.save()
+
+    order = Order.objects.create(customer=customer,complete=False)
+
+    # iterate through the cookie cart items and save them in the database
+    for item in items:
+        product = Product.objects.get(id=item['product']['id'])
+
+        orderItem = OrderItem.objects.create(
+            product=product,
+            order=order,
+            quantity=item['quantity']
+        )
+
+    return customer, order
+

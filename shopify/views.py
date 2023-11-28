@@ -5,7 +5,7 @@ import json
 from .models import *
 import datetime
 import random
-from . utils import cookieCart, cartData
+from . utils import cookieCart, cartData, guestOrder
 
 
 # Create your views here.
@@ -183,23 +183,25 @@ def processOrder(request):
     if request.user.is_authenticated:
         customer = request.user.customer
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
-        total = float(data['form']['total'])
-        order.transaction_id = transaction_id
-        order.complete = True
-        order.save()
-
-        if order.shipping_details == True:
-            ShippingAddress.objects.create(
-                customer = customer,
-                order = order,
-                mobile = data['shipping_details']['mobile'],
-                address = data['shipping_details']['address'],
-                city = data['shipping_details']['city'],
-                state = data['shipping_details']['state'],
-                zipcode = data['shipping_details']['zipcode'],
-
-            )
+       
 
     else:
-        print('User not logged in..')
+        customer, order = guestOrder(request, data)
+    
+    total = float(data['form']['total'])
+    order.transaction_id = transaction_id
+    order.complete = True
+    order.save()
+
+    if order.shipping_details == True:
+        ShippingAddress.objects.create(
+            customer = customer,
+            order = order,
+            mobile = data['shipping_details']['mobile'],
+            address = data['shipping_details']['address'],
+            city = data['shipping_details']['city'],
+            state = data['shipping_details']['state'],
+            zipcode = data['shipping_details']['zipcode'],
+
+        )
     return JsonResponse('payment submited..', safe=False)

@@ -143,11 +143,16 @@
             </div>
           </form>
         </div>
-        <div class="col-lg-3 col-6 text-right">
-          <a href="" class="btn border">
-            <i class="fas fa-heart text-primary"></i>
-            <span class="badge">0</span>
-          </a>
+        <div class="col-lg-3 col-6 text-right d-flex flex-wrap">
+          <p class="btn border">
+            <script>
+              if(user != 'AnonymousUser'){
+                  document.write('Welcome, ',user);
+                }else{
+                  document.write('Welcome, Guest');
+                }
+            </script>
+          </p>
           <a href="{% url 'shopify:cart'%}" class="btn border">
             <i class="fas fa-shopping-cart text-primary"></i>
             <span class="badge">
@@ -390,8 +395,8 @@
             </h1>
           </a>
           <p>
-            Dolore erat dolor sit lorem vero amet. Sed sit lorem magna, ipsum no
-            sit erat lorem et magna ipsum dolore amet erat.
+            At Shopify, quality is our top priority. Each piece in our collection is crafted with precision and attention to detail, ensuring you receive clothing that not only looks good but also stands the test of time. 
+            
           </p>
           <p class="mb-2">
             <i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street,

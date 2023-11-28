@@ -182,7 +182,8 @@
 
 <script type="text/javascript">
   let shipping_details = "{{order.shipping_details}}";
-  let Total = "{{order.get_total_payment|add:shipping.shipping_cost|floatformat:2}}"
+  let Total = "{{order.get_cart_total|add:shipping.shipping_cost|floatformat:2}}"
+  console.log("Total: ", Total);
   if (shipping_details == "False") {
     document.getElementById("shipping_info").innerHTML = "";
   }
@@ -254,6 +255,9 @@
     .then((data) => {
         console.log('success: ', data)
         alert('Transaction completed')
+
+        cart = {}
+        document.cookie = 'cart=' + JSON.stringify(cart) + ";domain;path=/"
         window.location.href = "{% url 'shopify:home'%}"
     });
   }
