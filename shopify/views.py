@@ -1,6 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from django.db.models import Count
+from django.forms import inlineformset_factory
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
+from . forms import CreateUserForm
 import json
 from .models import *
 import datetime
@@ -126,6 +131,18 @@ def contact(request):
 
 def signin(request):
 
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            messages.success(request,'Login Successfully')
+            return redirect('shopify:home')
+          
+
 
     # get data from utils.py 
     data = cartData(request)
@@ -138,12 +155,24 @@ def signin(request):
     return render(request, 'signin.html',context)
 
 def register(request):
+    # register a new user
+    form = CreateUserForm()
+    if request.method == 'POST':
+        form = CreateUserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Account created successfully. You can now log in.')
+            # Redirect to a success page or login page
+            return redirect('shopify:signin')
+        # else:
+            messages.error(request, 'Error creating your account. Please correct the errors below.')
 
     # get data from utils.py 
     data = cartData(request)
     cartItems = data['cartItems']
     
     context = {
+        'form': form,
         'cartItems': cartItems,
         'name':'register'
     }

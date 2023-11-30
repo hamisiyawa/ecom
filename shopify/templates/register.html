@@ -17,33 +17,48 @@
 <!-- Page Header End -->
     <div class="container">
         <h2 class="text-center mb-4">Registration Form</h2>
-        <form style="width: 70%; margin: auto;">
+        <form style="width: 70%; margin: auto;" method="POST" action="">
+            {% csrf_token %}
             <div class="mb-3">
-                <label for="firstName" class="form-label">First Name</label>
-                <input type="text" class="form-control" id="firstName" name="firstname" required>
-            </div>
-            <div class="mb-3">
-                <label for="lastName" class="form-label">Last Name</label>
-                <input type="text" class="form-control" id="lastName" name="lastname" required>
+                <label for="UserName" class="form-label">UserName</label>
+                {{ form.username }}   
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" name="email" required>
+                {{ form.email }}
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" name="password1" required>
+                {{ form.password1 }} 
             </div>
             <div class="mb-3">
-                <label for="confirmPassword" class="form-label">Confirm Password</label>
-                <input type="password" class="form-control" id="confirmPassword" name="password2" required>
+                <label for="password" class="form-label">Password Comfirmation</label>
+                {{ form.password2 }}
             </div>
+           
             <button type="submit" class="btn btn-lg btn-block btn-primary mb-3">Register</button>
             <p class="text-center">Already having acount?<a href="{% url 'shopify:signin'%}">Login here</a></p>
         </form>
     </div>
     
+    <script>
+        let form_username = document.getElementById('id_username');
+        let form_email = document.getElementById('id_email');
+        let form_password = document.getElementById('id_password1');
+        let form_confirm_password = document.getElementById('id_password2');
 
+        form_username.placeholder = 'Username';
+        form_email.placeholder = 'Email';
+        form_password.placeholder = 'Password';
+        form_confirm_password.placeholder = 'Confirm password';
+
+        let form_fields = [form_username, form_email, form_password, form_confirm_password];
+
+        for (let field of form_fields) {
+            field.classList.add('form-control');
+        }
+
+    </script>
 {% endblock %}
 
 
