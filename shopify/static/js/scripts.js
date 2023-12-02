@@ -9,7 +9,7 @@ for (let i = 0; i < updateBtns.length; i++) {
       if(user === 'AnonymousUser'){
         addCookieItem(productId, action)
       }else{
-        alert('Item added to cart successfully')
+        alert('Item updated to cart successfully')
         updateUserOrder(productId,action)
       }
    })
@@ -62,3 +62,4 @@ function updateUserOrder(productId, action) {
         location.reload()
     });
 }
+

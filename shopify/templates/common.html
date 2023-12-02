@@ -232,12 +232,18 @@
                 >
               </div>
               <div class="navbar-nav ml-auto py-0">
-                <a href="{% url 'shopify:signin'%}" class="nav-item nav-link"
+
+                <a href="{% url 'shopify:signin'%}" id="loginLink" class="nav-item nav-link"
                   >Login</a
                 >
-                <a href="{% url 'shopify:register'%}" class="nav-item nav-link"
+                <a href="{% url 'shopify:register'%}" id="registerLink" class="nav-item nav-link"
                   >Register</a
                 >
+
+                <a href="{% url 'shopify:logout' %}" id="logoutLink" class="nav-item nav-link"
+                  >Logout</a
+                >
+
               </div>
             </div>
           </nav>
@@ -322,8 +328,16 @@
                             <a href="{% url 'shopify:contact'%}" class="nav-item nav-link">Contact</a>
                         </div>
                         <div class="navbar-nav ml-auto py-0">
-                            <a href="{% url 'shopify:signin'%}" class="nav-item nav-link">Login</a>
-                            <a href="{% url 'shopify:register'%}" class="nav-item nav-link">Register</a>
+                            <a href="{% url 'shopify:signin'%}" id="loginLink" class="nav-item nav-link"
+                              >Login</a
+                            >
+                            <a href="{% url 'shopify:register'%}" id="registerLink" class="nav-item nav-link"
+                              >Register</a
+                            >
+            
+                            <a href="{% url 'shopify:logout' %}" id="logoutLink" class="nav-item nav-link"
+                              >Logout</a
+                            >
                         </div>
                     </div>
                 </nav>
@@ -372,8 +386,16 @@
                           <a href="{% url 'shopify:contact'%}" class="nav-item nav-link">Contact</a>
                       </div>
                       <div class="navbar-nav ml-auto py-0">
-                          <a href="{% url 'shopify:signin'%}" class="nav-item nav-link">Login</a>
-                          <a href="{% url 'shopify:register'%}" class="nav-item nav-link">Register</a>
+                          <a href="{% url 'shopify:signin'%}" id="loginLink" class="nav-item nav-link"
+                            >Login</a
+                          >
+                          <a href="{% url 'shopify:register'%}" id="registerLink" class="nav-item nav-link"
+                            >Register</a
+                          >
+          
+                          <a href="{% url 'shopify:logout' %}" id="logoutLink" class="nav-item nav-link"
+                            >Logout</a
+                          >
                       </div>
                   </div>
               </nav>
@@ -519,6 +541,18 @@
       ><i class="fa fa-angle-double-up"></i
     ></a>
 
+    <script>
+      // Check if the user is anonymous or not
+      if (user === 'AnonymousUser') {
+          document.getElementById('loginLink').style.display = 'block';
+          document.getElementById('registerLink').style.display = 'block';
+          document.getElementById('logoutLink').style.display = 'none';
+      } else {
+          document.getElementById('loginLink').style.display = 'none';
+          document.getElementById('registerLink').style.display = 'none';
+          document.getElementById('logoutLink').style.display = 'block';
+      }
+    </script>
    
 
     <!-- JavaScript Libraries -->

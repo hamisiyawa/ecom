@@ -178,6 +178,12 @@ def register(request):
     }
     return render(request, 'register.html',context )
 
+def custom_logout(request):
+    logout(request)
+    # Add any additional logic you want to perform on logout
+    messages.success(request, 'Logout Successful')
+    return redirect('shopify:home') 
+
 
 def updateItem(request):
     data = json.loads(request.body)
